@@ -4,7 +4,8 @@ import { useEffect, useCallback, useContext } from "react";
 import { AppContext } from "./Provider";
 
 function Keyboard() {
-  const { onSelectLetter, onDelete, onSubmit } = useContext(AppContext);
+  const { onSelectLetter, onDelete, onSubmit, disabledLetters } =
+    useContext(AppContext);
 
   const topKeys = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
   const midKeys = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
@@ -37,18 +38,36 @@ function Keyboard() {
     <div className="keyboard" onKeyDown={handleKeyboard}>
       <div className="topKeys">
         {topKeys.map((key) => {
-          return <Key keyValue={key} />;
+          return (
+            <Key
+              key={key}
+              keyValue={key}
+              disabled={disabledLetters.includes(key)}
+            />
+          );
         })}
       </div>
       <div className="midKeys">
         {midKeys.map((key) => {
-          return <Key keyValue={key} />;
+          return (
+            <Key
+              key={key}
+              keyValue={key}
+              disabled={disabledLetters.includes(key)}
+            />
+          );
         })}
       </div>
       <div className="bottomKeys">
         <Key keyValue={"Submit"} wideKey />
         {bottomKeys.map((key) => {
-          return <Key keyValue={key} />;
+          return (
+            <Key
+              key={key}
+              keyValue={key}
+              disabled={disabledLetters.includes(key)}
+            />
+          );
         })}
         <Key keyValue={"Delete"} wideKey />
       </div>

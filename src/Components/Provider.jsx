@@ -3,13 +3,16 @@ import Board from "./Board";
 import Keyboard from "./Keyboard";
 import { boardDefault, newWord } from "../Util/Word-Util";
 import { useState, createContext } from "react";
+import wordsList from "../Util/Words";
 
 export const AppContext = createContext();
 
 function Provider() {
   const [board, setBoard] = useState(boardDefault);
   const [currAttempt, setCurrAttempt] = useState({ attempt: 0, letterPos: 0 });
-  const [wordSet, setWordSet] = useState(newWord());
+  const [wordSet, setWordSet] = useState(new Set());
+  const [disabledLetters, setDisabledLetters] = useState([]);
+
   let correctWord = "acorn";
 
   const onSelectLetter = (keyValue) => {
@@ -33,7 +36,22 @@ function Provider() {
 
   const onSubmit = () => {
     if (currAttempt.letterPos !== 5) return;
-    setCurrAttempt({ attempt: currAttempt.attempt + 1, letterPos: 0 });
+
+    let currWord = "";
+
+    for (let i = 0; i < 5; i++) {
+      currWord += board[currAttempt.attempt][i];
+    }
+
+    if (wordsList.includes(currWord.toLowerCase())) {
+      setCurrAttempt({ attempt: currAttempt.attempt + 1, letterPos: 0 });
+    } else {
+      alert("word not found");
+    }
+
+    if (currWord.toUpperCase() === correctWord.toUpperCase()) {
+      alert("game ended");
+    }
   };
   return (
     <div>
@@ -47,6 +65,8 @@ function Provider() {
           onDelete,
           onSubmit,
           correctWord,
+          disabledLetters,
+          setDisabledLetters,
         }}
       >
         <div className="gameLayout">
