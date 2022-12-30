@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Board from "./Board";
 import Keyboard from "./Keyboard";
-import { boardDefault, generateWordSet } from "../Words";
+import { boardDefault, newWord } from "../Util/Word-Util";
 import { useState, createContext } from "react";
 
 export const AppContext = createContext();
@@ -9,13 +9,8 @@ export const AppContext = createContext();
 function Provider() {
   const [board, setBoard] = useState(boardDefault);
   const [currAttempt, setCurrAttempt] = useState({ attempt: 0, letterPos: 0 });
-  const correctWord = "ACORN";
-
-  useEffect(() => {
-    generateWordSet().then((word) => {
-      console.log(word);
-    });
-  }, []);
+  const [wordSet, setWordSet] = useState(newWord());
+  let correctWord = "acorn";
 
   const onSelectLetter = (keyValue) => {
     const newBoard = [...board];
