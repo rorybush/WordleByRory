@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
 import Board from "./Board";
 import Keyboard from "./Keyboard";
 import GameOver from "./GameOver";
 import { boardDefault, newWord } from "../Util/Word-Util";
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import wordsList from "../Util/Words";
 
 export const AppContext = createContext();
