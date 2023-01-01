@@ -9,7 +9,12 @@ export const boardDefault = [
   ["", "", "", "", ""],
 ];
 
-export const newWord = () => {
+const newWordGenerator = () => {
   const randomIndex = Math.floor(Math.random() * wordsList.length);
-  return wordsList[randomIndex].toUpperCase();
+  const newWord = wordsList[randomIndex].toUpperCase();
+  return newWord;
 };
+
+export const newWord = newWordGenerator();
+
+console.log(newWord);
